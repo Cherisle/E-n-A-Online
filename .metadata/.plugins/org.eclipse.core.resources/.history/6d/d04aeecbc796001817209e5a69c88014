@@ -20,7 +20,7 @@ import static org.lwjgl.system.MemoryUtil.*;
 
 public class GameMain 
 {
-	/*lightPos = BufferUtils.createFloatBuffer(4);
+	lightPos = BufferUtils.createFloatBuffer(4);
 	lightPos.put(1).put(1).put(3).put(0).flip();
 	// Our vertices. Three consecutive floats give a 3D vertex; Three consecutive vertices give a triangle.
 	// A cube has 6 faces with 2 triangles each, so this makes 6*2=12 triangles, and 12*3 vertices
@@ -61,7 +61,7 @@ public class GameMain
 	    1.0f, 1.0f, 1.0f,
 	    -1.0f, 1.0f, 1.0f,
 	    1.0f,-1.0f, 1.0f
-	};*/
+	};
 	
 	// The window handle
 	private long window;

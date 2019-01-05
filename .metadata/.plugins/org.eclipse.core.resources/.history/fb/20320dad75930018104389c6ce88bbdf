@@ -2,7 +2,6 @@ import org.lwjgl.*;
 import org.lwjgl.glfw.*;
 import org.lwjgl.opengl.*;
 import org.lwjgl.system.*;
-import org.lwjgl.BufferUtils;
 
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.Connection;
@@ -18,50 +17,7 @@ import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.system.MemoryStack.*;
 import static org.lwjgl.system.MemoryUtil.*;
 
-public class GameMain 
-{
-	/*lightPos = BufferUtils.createFloatBuffer(4);
-	lightPos.put(1).put(1).put(3).put(0).flip();
-	// Our vertices. Three consecutive floats give a 3D vertex; Three consecutive vertices give a triangle.
-	// A cube has 6 faces with 2 triangles each, so this makes 6*2=12 triangles, and 12*3 vertices
-	static const GLfloat g_vertex_buffer_data[] = {
-	    -1.0f,-1.0f,-1.0f, // triangle 1 : begin
-	    -1.0f,-1.0f, 1.0f,
-	    -1.0f, 1.0f, 1.0f, // triangle 1 : end
-	    1.0f, 1.0f,-1.0f, // triangle 2 : begin
-	    -1.0f,-1.0f,-1.0f,
-	    -1.0f, 1.0f,-1.0f, // triangle 2 : end
-	    1.0f,-1.0f, 1.0f,
-	    -1.0f,-1.0f,-1.0f,
-	    1.0f,-1.0f,-1.0f,
-	    1.0f, 1.0f,-1.0f,
-	    1.0f,-1.0f,-1.0f,
-	    -1.0f,-1.0f,-1.0f,
-	    -1.0f,-1.0f,-1.0f,
-	    -1.0f, 1.0f, 1.0f,
-	    -1.0f, 1.0f,-1.0f,
-	    1.0f,-1.0f, 1.0f,
-	    -1.0f,-1.0f, 1.0f,
-	    -1.0f,-1.0f,-1.0f,
-	    -1.0f, 1.0f, 1.0f,
-	    -1.0f,-1.0f, 1.0f,
-	    1.0f,-1.0f, 1.0f,
-	    1.0f, 1.0f, 1.0f,
-	    1.0f,-1.0f,-1.0f,
-	    1.0f, 1.0f,-1.0f,
-	    1.0f,-1.0f,-1.0f,
-	    1.0f, 1.0f, 1.0f,
-	    1.0f,-1.0f, 1.0f,
-	    1.0f, 1.0f, 1.0f,
-	    1.0f, 1.0f,-1.0f,
-	    -1.0f, 1.0f,-1.0f,
-	    1.0f, 1.0f, 1.0f,
-	    -1.0f, 1.0f,-1.0f,
-	    -1.0f, 1.0f, 1.0f,
-	    1.0f, 1.0f, 1.0f,
-	    -1.0f, 1.0f, 1.0f,
-	    1.0f,-1.0f, 1.0f
-	};*/
+public class GameMain {
 	
 	// The window handle
 	private long window;
@@ -94,12 +50,10 @@ public class GameMain
 		server = new Server();
 		Kryo kryo = server.getKryo();
 		kryo.register(SomeRequest.class);
-		kryo.register(SomeResponse.class);
 		try
 		{
 			server.start();
 		    server.bind(54555, 54777);
-		    
 		    server.addListener(new Listener() {
 		        public void received (Connection connection, Object object) {
 		           if (object instanceof SomeRequest) {
