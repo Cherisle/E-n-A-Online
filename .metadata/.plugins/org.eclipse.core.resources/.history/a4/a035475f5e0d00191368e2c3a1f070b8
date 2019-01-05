@@ -1,0 +1,16 @@
+package renderEngine;
+
+import org.lwjgl.opengl.*;
+import org.lwjgl.glfw.*;
+
+public class DisplayManager 
+{
+	public static void createDisplay()
+	{
+		setDisplayMode();
+	}
+	
+	public static void updateDisplay(){}
+	
+	public static void closeDisplay(){}
+}

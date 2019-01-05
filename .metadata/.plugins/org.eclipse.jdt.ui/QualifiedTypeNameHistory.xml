@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="com.esotericsoftware.kryonet.Server"/>
 <fullyQualifiedTypeName name="java.io.IOException"/>
 <fullyQualifiedTypeName name="com.esotericsoftware.kryonet.Listener"/>
 <fullyQualifiedTypeName name="com.esotericsoftware.kryonet.Connection"/>
 <fullyQualifiedTypeName name="com.esotericsoftware.kryo.Kryo"/>
+<fullyQualifiedTypeName name="org.lwjgl.glfw.GLFWVidMode"/>
+<fullyQualifiedTypeName name="engine.io.Window"/>
+<fullyQualifiedTypeName name="org.lwjgl.BufferUtils"/>
+<fullyQualifiedTypeName name="java.nio.DoubleBuffer"/>
+<fullyQualifiedTypeName name="com.esotericsoftware.kryonet.Server"/>
+<fullyQualifiedTypeName name="org.lwjgl.opengl.GL"/>
+<fullyQualifiedTypeName name="org.lwjgl.opengl.GL11"/>
 </qualifiedTypeNameHistroy>

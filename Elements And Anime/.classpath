@@ -6,5 +6,11 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/LWJGL-opengl"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/LWJGL-glfw"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Kryonet"/>
+	<classpathentry kind="lib" path="C:/Users/Michael/Downloads/joml-1.9.12.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Michael/Downloads/lwjgl-3.1.6/lwjgl-bgfx/lwjgl-bgfx.jar" sourcepath="C:/Users/Michael/Downloads/lwjgl-3.1.6/lwjgl-bgfx/lwjgl-bgfx-sources.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:file:/C:/Users/Michael/Downloads/lwjgl-3.1.6/lwjgl-bgfx/lwjgl-bgfx-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
