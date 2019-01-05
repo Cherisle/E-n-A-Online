@@ -4,6 +4,8 @@ import org.lwjgl.opengl.*;
 import org.lwjgl.system.*;
 import org.lwjgl.BufferUtils;
 
+import engine.io.Window;
+
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
@@ -18,50 +20,33 @@ import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.system.MemoryStack.*;
 import static org.lwjgl.system.MemoryUtil.*;
 
+import org.joml.Matrix4f;
+import org.joml.Vector3f;
+import org.lwjgl.bgfx.BGFXVertexDecl;
+import org.lwjgl.system.MemoryUtil;
+
+import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.nio.FloatBuffer;
+
+import static org.lwjgl.bgfx.BGFX.*;
+
 public class GameMain 
 {
-	/*lightPos = BufferUtils.createFloatBuffer(4);
-	lightPos.put(1).put(1).put(3).put(0).flip();
-	// Our vertices. Three consecutive floats give a 3D vertex; Three consecutive vertices give a triangle.
-	// A cube has 6 faces with 2 triangles each, so this makes 6*2=12 triangles, and 12*3 vertices
-	static const GLfloat g_vertex_buffer_data[] = {
-	    -1.0f,-1.0f,-1.0f, // triangle 1 : begin
-	    -1.0f,-1.0f, 1.0f,
-	    -1.0f, 1.0f, 1.0f, // triangle 1 : end
-	    1.0f, 1.0f,-1.0f, // triangle 2 : begin
-	    -1.0f,-1.0f,-1.0f,
-	    -1.0f, 1.0f,-1.0f, // triangle 2 : end
-	    1.0f,-1.0f, 1.0f,
-	    -1.0f,-1.0f,-1.0f,
-	    1.0f,-1.0f,-1.0f,
-	    1.0f, 1.0f,-1.0f,
-	    1.0f,-1.0f,-1.0f,
-	    -1.0f,-1.0f,-1.0f,
-	    -1.0f,-1.0f,-1.0f,
-	    -1.0f, 1.0f, 1.0f,
-	    -1.0f, 1.0f,-1.0f,
-	    1.0f,-1.0f, 1.0f,
-	    -1.0f,-1.0f, 1.0f,
-	    -1.0f,-1.0f,-1.0f,
-	    -1.0f, 1.0f, 1.0f,
-	    -1.0f,-1.0f, 1.0f,
-	    1.0f,-1.0f, 1.0f,
-	    1.0f, 1.0f, 1.0f,
-	    1.0f,-1.0f,-1.0f,
-	    1.0f, 1.0f,-1.0f,
-	    1.0f,-1.0f,-1.0f,
-	    1.0f, 1.0f, 1.0f,
-	    1.0f,-1.0f, 1.0f,
-	    1.0f, 1.0f, 1.0f,
-	    1.0f, 1.0f,-1.0f,
-	    -1.0f, 1.0f,-1.0f,
-	    1.0f, 1.0f, 1.0f,
-	    -1.0f, 1.0f,-1.0f,
-	    -1.0f, 1.0f, 1.0f,
-	    1.0f, 1.0f, 1.0f,
-	    -1.0f, 1.0f, 1.0f,
-	    1.0f,-1.0f, 1.0f
-	};*/
+    private static final int WIDTH = 800, HEIGHT = 600, FPS = 60;
+	private BGFXVertexDecl decl;
+    private ByteBuffer vertices;
+    private short vbh;
+    private ByteBuffer indices;
+    private short ibh;
+    private short program;
+
+    private Matrix4f view = new Matrix4f();
+    private FloatBuffer viewBuf;
+    private Matrix4f proj = new Matrix4f();
+    private FloatBuffer projBuf;
+    private Matrix4f model = new Matrix4f();
+    private FloatBuffer modelBuf;
 	
 	// The window handle
 	private long window;
@@ -72,7 +57,8 @@ public class GameMain
 	
 	private State state = State.INTRO;
 
-	public void run() {
+	public void run() 
+	{
 		System.out.println("Hello LWJGL " + Version.getVersion() + "!");
 
 		init();
@@ -119,6 +105,7 @@ public class GameMain
 			System.out.println(io.getMessage());
 		}
 	    
+		
 		GLFWErrorCallback.createPrint(System.err).set();
 
 		// Initialize GLFW. Most GLFW functions will not work before doing this.
@@ -161,6 +148,7 @@ public class GameMain
 
 		// Make the window visible
 		glfwShowWindow(window);
+		
 	}
 
 	private void loop() {
@@ -179,7 +167,7 @@ public class GameMain
 		while ( !glfwWindowShouldClose(window) ) {
 			checkInput();
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear the framebuffer
-			render();
+			//render();
 			glfwSwapBuffers(window); // swap the color buffers
 			// Poll for window events. The key callback above will only be
 			// invoked during this call.
@@ -187,24 +175,8 @@ public class GameMain
 		}
 	}
 	
-	private void render() {
-		switch(state){
-			case INTRO:
-				glColor3f(1.0f,0f,0f);
-				glRectf(0,0,640,480);
-				break;
-			case MAIN_MENU:
-				glColor3f(0f,1.0f,0f);
-				glRectf(0,0,640,480);
-				break;
-			case GAME:
-				glColor3f(0f,0f,1.0f);
-				glRectf(0,0,640,480);
-				break;
-		}
-	}
-	
-	private void checkInput(){
+	private void checkInput()
+	{
 		switch(state)
 		{
 		case INTRO:
@@ -270,8 +242,65 @@ public class GameMain
 		}
 	}
 	
-	public static void main(String[] args) {
-		new GameMain().run();
+	public static void main(String[] args) 
+	{
+		//new GameMain().run();
+		Window window = new Window(WIDTH,HEIGHT,FPS,"LWJGL Tutorial");
+		window.create();
+		
+		//set background color
+		window.setBackgroundColor(1.0f,0.0f,0.0f);
+		
+		//set up Kryo Server
+		Server server = new Server();
+		Kryo kryo = server.getKryo();
+		kryo.register(SomeRequest.class);
+		kryo.register(SomeResponse.class);
+		try
+		{
+			server.start();
+		    server.bind(54555, 54777);
+		    
+		    server.addListener(new Listener() {
+		        public void received (Connection connection, Object object) {
+		           if (object instanceof SomeRequest) {
+		              SomeRequest request = (SomeRequest)object;
+		              System.out.println(request.text);
+		     
+		              SomeResponse response = new SomeResponse();
+		              response.text = "Thanks";
+		              connection.sendTCP(response);
+		           }
+		        }
+		     });
+		    System.out.println("Successfully started server");
+		}
+		catch(IOException io)
+		{
+			System.out.println(io.getMessage());
+		}
+		
+		
+		while(!window.closed())
+		{
+			if(window.isUpdating())
+			{
+				window.update();
+				//key related presses dealt with between update and swap
+				//here
+				//window.checkInput();
+				//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear the framebuffer
+				//window.render();
+				if(window.isKeyPressed(GLFW.GLFW_KEY_A))
+				{
+					server.close();
+					System.out.println("Server successfully closed");
+				}
+				window.swapBuffers();
+			}
+		}
+		window.closeWindow();
+		System.exit(-1);
 	}
 
 }
